@@ -34,8 +34,8 @@ namespace EditIFC
         public IfcWallForm()
         {
             InitializeComponent();
-            string [] array = string.Join<Xbim.Common.IPersist>(Environment.NewLine, Form1.storeys.ToArray()).Split('\n');
-            for (int i = 0; i < Form1.storeys.Count; i++)
+            string [] array = string.Join<Xbim.Common.IPersist>(Environment.NewLine, EditIfcMainForm.storeys.ToArray()).Split('\n');
+            for (int i = 0; i < EditIfcMainForm.storeys.Count; i++)
             {
                 listBox2.Items.Add(array[i]);
             }
@@ -441,19 +441,19 @@ namespace EditIFC
         
         private void button3_Click(object sender, EventArgs e)
         {
-            Form1 frm1 = new Form1();
+            EditIfcMainForm frm1 = new EditIfcMainForm();
             String currentlocation;
             SaveFileDialog dialog = new SaveFileDialog();
 
 
-            using (var model = IfcStore.Open(Form1.FilePath))
+            using (var model = IfcStore.Open(EditIfcMainForm.FilePath))
             {
                 using (var txn = model.BeginTransaction("Add Wall"))
                 {
                     var storeys = model.Instances.OfType<IfcBuildingStorey>().ToList<Xbim.Ifc4.ProductExtension.IfcBuildingStorey>();
                     //Creation of relation which puts wall into the semantic hierarchy of the model 10. 
                     var create = new Create(model);
-                    var wall = CreateWall(model, Convert.ToDouble(textBox4.Text), Convert.ToDouble(textBox3.Text), Convert.ToDouble(textBox2.Text), Convert.ToDouble(textBox5.Text), Convert.ToDouble(textBox7.Text), Form1.storeys[listBox2.SelectedIndex]);
+                    var wall = CreateWall(model, Convert.ToDouble(textBox4.Text), Convert.ToDouble(textBox3.Text), Convert.ToDouble(textBox2.Text), Convert.ToDouble(textBox5.Text), Convert.ToDouble(textBox7.Text), EditIfcMainForm.storeys[listBox2.SelectedIndex]);
                     var relContainedInStructure = create.RelContainedInSpatialStructure (rel => 
                     {
                         rel.RelatingStructure = storeys[listBox2.SelectedIndex];

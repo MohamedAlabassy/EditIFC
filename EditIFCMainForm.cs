@@ -36,10 +36,10 @@ using System.Collections;
 namespace EditIFC
 {
     
-    public partial class Form1 : Form
+    public partial class EditIfcMainForm : Form
     {
         
-        public Form1()
+        public EditIfcMainForm()
         {
             InitializeComponent();
             foreach (Type ifcType in allEntitiesType)
@@ -68,13 +68,13 @@ namespace EditIFC
 
         public static XbimEditorCredentials credentials = new XbimEditorCredentials
         {
-            ApplicationDevelopersName = "Mohamed Alabassy",
+            ApplicationDevelopersName = "Prfessur Intelligentes Technisches Design",
             ApplicationFullName = "EditIFC",
             ApplicationIdentifier = "EditIFC",
             ApplicationVersion = "1.0",
             EditorsFamilyName = "Alabassy",
             EditorsGivenName = "Mohamed S. H.",
-            EditorsOrganisationName = "Buhaus-Universitaet Weimar, Professur intelligentes technisches Design"
+            EditorsOrganisationName = "Buhaus-Universitaet Weimar"
         };
         public static List<IIfcElement> instances;
         public static String[] array;
@@ -97,12 +97,14 @@ namespace EditIFC
             {
                 storeys = model.Instances.OfType<IfcBuildingStorey>().ToList<Xbim.Ifc4.ProductExtension.IfcBuildingStorey>();
                 instances = model.Instances.OfType<IfcElement>().ToList<IIfcElement>();
-                array = string.Join<Xbim.Common.IPersist>(Environment.NewLine, instances.ToArray()).Split('\n');                
+                array = new String[instances.Count];
+                listBox1.Items.Clear();
+                array = string.Join<Xbim.Common.IPersist>(Environment.NewLine, instances.ToArray()).Split('\n');
                 for (int i = 0; i < array.Length; i++)
                 {
                     listBox1.Items.Add(array[i]);
                 }
-                
+  
             }
 
         }
@@ -185,8 +187,8 @@ namespace EditIFC
             } else {
                 string name = Convert.ToString(listBox3.SelectedItem);
                 ifctype = Array.Find(allEntitiesType, element => element.Name.Split('.').Last().Equals(name));
-                ConstructorInfo cInf = ifctype.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] {typeof(IModel), typeof(int), typeof(bool) }, null);
-                IInstantiableEntity result = (IInstantiableEntity)cInf.Invoke(new object[] {IfcStore.Open(textBox1.Text, credentials, -1.0), 1, true});
+                ConstructorInfo cinfo = ifctype.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] {typeof(IModel), typeof(int), typeof(bool) }, null);
+                IInstantiableEntity result = (IInstantiableEntity)cinfo.Invoke(new object[] {IfcStore.Open(textBox1.Text, credentials, -1.0), 1, true});
                 FormFactory entity = FormFactory.get();
                 entity.GetForm((IIfcObject)result).ShowDialog();
             }

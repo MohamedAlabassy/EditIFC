@@ -147,11 +147,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="EditIfcMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="EditIfcMainForm.Designer.cs">
+      <DependentUpon>EditIfcMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="IfcSurfaceFeatureForm.cs">
       <SubType>Form</SubType>
@@ -174,8 +174,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="EditIfcMainForm.resx">
+      <DependentUpon>EditIfcMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IfcSurfaceFeatureForm.resx">
+      <DependentUpon>IfcSurfaceFeatureForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IfcVoidingFeatureForm.resx">
       <DependentUpon>IfcVoidingFeatureForm.cs</DependentUpon>

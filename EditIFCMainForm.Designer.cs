@@ -1,6 +1,6 @@
 ﻿namespace EditIFC
 {
-    partial class Form1
+    partial class EditIfcMainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -104,7 +104,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(16, 253);
+            this.button4.Location = new System.Drawing.Point(698, 254);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(90, 23);
             this.button4.TabIndex = 15;
@@ -113,7 +113,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(16, 282);
+            this.button5.Location = new System.Drawing.Point(698, 283);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(90, 23);
             this.button5.TabIndex = 22;
@@ -366,7 +366,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(17, 340);
+            this.button7.Location = new System.Drawing.Point(699, 341);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(89, 23);
             this.button7.TabIndex = 54;
@@ -404,15 +404,15 @@
             // listBox3
             // 
             this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(120, 369);
+            this.listBox3.Location = new System.Drawing.Point(120, 370);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(668, 134);
+            this.listBox3.Size = new System.Drawing.Size(569, 134);
             this.listBox3.TabIndex = 61;
             this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(17, 369);
+            this.button11.Location = new System.Drawing.Point(699, 370);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(89, 134);
             this.button11.TabIndex = 63;
@@ -450,14 +450,14 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(16, 311);
+            this.button3.Location = new System.Drawing.Point(698, 312);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(90, 23);
             this.button3.TabIndex = 66;
             this.button3.Text = "Copy";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // EditIFC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -507,7 +507,7 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
-            this.Name = "Form1";
+            this.Name = "EditIFC";
             this.Text = "Edit IFC";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

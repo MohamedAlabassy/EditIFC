@@ -35,6 +35,17 @@
             this.label2 = new System.Windows.Forms.Label();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.button3 = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.voidingFeatureTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cUTOUTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nOTCHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hOLEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mITERToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cHAMFERToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eDGEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uSERDEFINEDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uNDEFINEDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBox1
@@ -93,13 +104,96 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(12, 364);
+            this.button3.Location = new System.Drawing.Point(200, 365);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(126, 23);
             this.button3.TabIndex = 12;
             this.button3.Text = "Add Voiding Feature";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.voidingFeatureTypeToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(5, 364);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(256, 24);
+            this.menuStrip1.TabIndex = 13;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // voidingFeatureTypeToolStripMenuItem
+            // 
+            this.voidingFeatureTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cUTOUTToolStripMenuItem,
+            this.nOTCHToolStripMenuItem,
+            this.hOLEToolStripMenuItem,
+            this.mITERToolStripMenuItem,
+            this.cHAMFERToolStripMenuItem,
+            this.eDGEToolStripMenuItem,
+            this.uSERDEFINEDToolStripMenuItem,
+            this.uNDEFINEDToolStripMenuItem});
+            this.voidingFeatureTypeToolStripMenuItem.Name = "voidingFeatureTypeToolStripMenuItem";
+            this.voidingFeatureTypeToolStripMenuItem.Size = new System.Drawing.Size(128, 20);
+            this.voidingFeatureTypeToolStripMenuItem.Text = "Voiding Feature Type";
+            this.voidingFeatureTypeToolStripMenuItem.Click += new System.EventHandler(this.voidingFeatureTypeToolStripMenuItem_Click);
+            // 
+            // cUTOUTToolStripMenuItem
+            // 
+            this.cUTOUTToolStripMenuItem.Name = "cUTOUTToolStripMenuItem";
+            this.cUTOUTToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cUTOUTToolStripMenuItem.Text = "Cutout";
+            this.cUTOUTToolStripMenuItem.Click += new System.EventHandler(this.cUTOUTToolStripMenuItem_Click);
+            // 
+            // nOTCHToolStripMenuItem
+            // 
+            this.nOTCHToolStripMenuItem.Name = "nOTCHToolStripMenuItem";
+            this.nOTCHToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nOTCHToolStripMenuItem.Text = "Notch";
+            this.nOTCHToolStripMenuItem.Click += new System.EventHandler(this.nOTCHToolStripMenuItem_Click);
+            // 
+            // hOLEToolStripMenuItem
+            // 
+            this.hOLEToolStripMenuItem.Name = "hOLEToolStripMenuItem";
+            this.hOLEToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.hOLEToolStripMenuItem.Text = "Hole";
+            this.hOLEToolStripMenuItem.Click += new System.EventHandler(this.hOLEToolStripMenuItem_Click);
+            // 
+            // mITERToolStripMenuItem
+            // 
+            this.mITERToolStripMenuItem.Name = "mITERToolStripMenuItem";
+            this.mITERToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mITERToolStripMenuItem.Text = "Miter";
+            this.mITERToolStripMenuItem.Click += new System.EventHandler(this.mITERToolStripMenuItem_Click);
+            // 
+            // cHAMFERToolStripMenuItem
+            // 
+            this.cHAMFERToolStripMenuItem.Name = "cHAMFERToolStripMenuItem";
+            this.cHAMFERToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cHAMFERToolStripMenuItem.Text = "Chamfer";
+            this.cHAMFERToolStripMenuItem.Click += new System.EventHandler(this.cHAMFERToolStripMenuItem_Click);
+            // 
+            // eDGEToolStripMenuItem
+            // 
+            this.eDGEToolStripMenuItem.Name = "eDGEToolStripMenuItem";
+            this.eDGEToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.eDGEToolStripMenuItem.Text = "Edge";
+            this.eDGEToolStripMenuItem.Click += new System.EventHandler(this.eDGEToolStripMenuItem_Click);
+            // 
+            // uSERDEFINEDToolStripMenuItem
+            // 
+            this.uSERDEFINEDToolStripMenuItem.Name = "uSERDEFINEDToolStripMenuItem";
+            this.uSERDEFINEDToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.uSERDEFINEDToolStripMenuItem.Text = "Userdefined";
+            this.uSERDEFINEDToolStripMenuItem.Click += new System.EventHandler(this.uSERDEFINEDToolStripMenuItem_Click);
+            // 
+            // uNDEFINEDToolStripMenuItem
+            // 
+            this.uNDEFINEDToolStripMenuItem.Name = "uNDEFINEDToolStripMenuItem";
+            this.uNDEFINEDToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.uNDEFINEDToolStripMenuItem.Text = "Undefined";
+            this.uNDEFINEDToolStripMenuItem.Click += new System.EventHandler(this.uNDEFINEDToolStripMenuItem_Click);
             // 
             // IfcVoidingFeatureForm
             // 
@@ -113,9 +207,13 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "IfcVoidingFeatureForm";
             this.Text = "IfcVoidingFeature";
             this.Load += new System.EventHandler(this.IfcVoidingFeatureForm_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,5 +228,15 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem voidingFeatureTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cUTOUTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nOTCHToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hOLEToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mITERToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cHAMFERToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem eDGEToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uSERDEFINEDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uNDEFINEDToolStripMenuItem;
     }
 }
