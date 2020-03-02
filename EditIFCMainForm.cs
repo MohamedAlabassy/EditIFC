@@ -51,9 +51,9 @@ namespace EditIFC
                 }
             }
             ifcentities.Sort();
-            foreach (string o in ifcentities)
+            foreach (string e in ifcentities)
             {
-                listBox3.Items.Add(o);
+                listBox3.Items.Add(e);
             }
         }
 
@@ -66,6 +66,36 @@ namespace EditIFC
 
         }
 
+        private void updateListOfElements (string dateiname, XbimEditorCredentials cred)
+        {
+            using (var model = IfcStore.Open(dateiname, cred, -1.0))
+            {
+                instances = model.Instances.OfType<IIfcElement>().ToArray();
+                array = new String[instances.Length];
+                listBox1.Items.Clear();
+                array = string.Join<Xbim.Common.IPersist>(Environment.NewLine, instances).Split('\n');
+                for (int i = 0; i < array.Length; i++)
+                {
+                    listBox1.Items.Add(array[i]);
+                }
+            }
+        }
+
+        private void updateSelectedItemsAndIndeces (string filename)
+        {
+            selectedindices.Clear();
+            selecteditems.Clear();
+            selectedindices = listBox1.SelectedIndices.Cast<int>().ToList();
+            using (var model = IfcStore.Open(filename, credentials, -1.0))
+            {
+                instances = model.Instances.OfType<IIfcElement>().ToArray();
+                foreach (var i in selectedindices)
+                {
+                    selecteditems.Add(Array.Find(instances, e => e.GetType().GUID.Equals(instances[i].GetType().GUID)));
+                }
+            }
+        }
+
         public static XbimEditorCredentials credentials = new XbimEditorCredentials
         {
             ApplicationDevelopersName = "Prfessur Intelligentes Technisches Design",
@@ -76,11 +106,15 @@ namespace EditIFC
             EditorsGivenName = "Mohamed S. H.",
             EditorsOrganisationName = "Buhaus-Universitaet Weimar"
         };
-        public static List<IIfcElement> instances;
+
+        public static IIfcElement[] instances;
         public static String[] array;
         public static String[] array2;
+        string DateiName;
         public static List<Xbim.Ifc4.ProductExtension.IfcBuildingStorey> storeys;
-        public static int selectedindex;
+        public static List<IIfcElement> selecteditems = new List<IIfcElement>();
+        public static List<int> selectedindices = new List<int>();
+
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -88,40 +122,18 @@ namespace EditIFC
             dialog.Title = "Open an IFC File";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                String DateiName = dialog.FileName;
                 textBox1.Text = dialog.FileName;
+                DateiName = textBox1.Text;
+                updateListOfElements(DateiName, credentials);
             }
-
-            using (var model = IfcStore.Open(textBox1.Text, credentials, -1.0))
-            {
-                storeys = model.Instances.OfType<IfcBuildingStorey>().ToList<Xbim.Ifc4.ProductExtension.IfcBuildingStorey>();
-                instances = model.Instances.OfType<IfcElement>().ToList<IIfcElement>();
-                array = new String[instances.Count];
-                listBox1.Items.Clear();
-                array = string.Join<Xbim.Common.IPersist>(Environment.NewLine, instances.ToArray()).Split('\n');
-                for (int i = 0; i < array.Length; i++)
-                {
-                    listBox1.Items.Add(array[i]);
-                }
-
-            }
-
+            
         }
 
         private void listBox1_SelectedIndexChanged_2(object sender, EventArgs e)
         {
-
+            updateSelectedItemsAndIndeces(DateiName);
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
         public static Xbim.Ifc4.ProductExtension.IfcBuildingStorey StoreyLevel;
         //public IfcStore model = IfcStore.Open(FilePath, credentials, -1.0);
 
@@ -175,19 +187,19 @@ namespace EditIFC
         public static string FilePath;
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            FilePath = textBox1.Text;
+            DateiName = textBox1.Text;
+            FilePath = DateiName;
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            if (listBox3.SelectedIndex == -1 || listBox3.SelectedItems.Count > 1)
+            if (listBox3.SelectedIndex == -1 || listBox3.SelectedItems.Count > 1 || selecteditems.Count > 1)
             {
-                MessageBox.Show("Please select one item first!");
+                MessageBox.Show("Please select only one item first!");
             }
             else
             {
-                selectedindex = listBox1.SelectedIndex;
-                string name = Convert.ToString(listBox3.SelectedItem);
+                string name = listBox3.SelectedItem.ToString();
                 ifctype = Array.Find(allEntitiesType, element => element.Name.Split('.').Last().Equals(name));
                 ConstructorInfo cinfo = ifctype.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(IModel), typeof(int), typeof(bool) }, null);
                 IInstantiableEntity result = (IInstantiableEntity)cinfo.Invoke(new object[] { IfcStore.Open(textBox1.Text, credentials, -1.0), 1, true });
@@ -214,8 +226,7 @@ namespace EditIFC
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form copy = new copyForm();
-            selectedindex = listBox1.SelectedIndex;
+            Form copy = new CopyForm();
             if (listBox1.SelectedItems.Count==0)
             {
                 DialogResult result = MessageBox.Show("Select an item from the above list to copy!");
@@ -225,6 +236,7 @@ namespace EditIFC
                 } 
             } else
             {
+                updateSelectedItemsAndIndeces(DateiName);
                 copy.ShowDialog();
             }
         }
@@ -244,13 +256,15 @@ namespace EditIFC
             {
                 using (var model = IfcStore.Open(FilePath, credentials, -1.0))
                 {
-                    IPersistEntity element2bedeleted = Array.Find(model.Instances.ToList().ToArray(), e1 => e1.GetType().GUID.Equals(instances[listBox1.SelectedIndex].GetType().GUID));
                     using (var txn = model.BeginTransaction("Delete selected element"))
                     {
-                        model.Delete(element2bedeleted);
+                        foreach (var i in selecteditems) 
+                        {
+                            IPersistEntity element2bedeleted = Array.Find(model.Instances.ToArray(), e1 => e1.GetType().GUID.Equals(i.GetType().GUID));
+                            model.Delete(element2bedeleted); 
+                        }
                         txn.Commit();
                     }
-
                     model.SaveAs(FilePath.Split('\\').Last());
                 }
                 currentlocation = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\" + FilePath.Split('\\').Last();
@@ -271,6 +285,8 @@ namespace EditIFC
                     }
                 }
             }
+            updateListOfElements(DateiName, credentials);
+            updateSelectedItemsAndIndeces(DateiName);
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -280,7 +296,10 @@ namespace EditIFC
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            Form paste = new PasteForm();
+            paste.ShowDialog();
+            updateListOfElements(DateiName, credentials);
+            updateSelectedItemsAndIndeces(DateiName);
         }
     }
 }

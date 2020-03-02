@@ -9,32 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Xbim.Common;
 using Xbim.Ifc;
+using Xbim.Ifc4.Interfaces;
 using Xbim.Ifc4.ProductExtension;
 
 namespace EditIFC
 {
-    public partial class copyForm : Form
+    public partial class CopyForm : Form
     {
-        public copyForm()
+        public CopyForm()
         {
             InitializeComponent();
         }
 
         public static String dateiName;
         private void button1_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "IFC|*.ifc|Ifc ZIP|*.ifczip|XML|*.xml";
-            dialog.Title = "Open an IFC File";
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-
-                dateiName = dialog.FileName;
-                textBox1.Text = dialog.FileName;
-            }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -44,18 +32,24 @@ namespace EditIFC
             return property.PropertyInfo.GetValue(parentObject, null);
         };
 
-        public static IfcStore model, imodel;
-        private void button3_Click(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
             //var secondmodel = model.Instances.OfType<IInstantiableEntity>();
-            model = IfcStore.Open(EditIfcMainForm.FilePath);  //copied model
+            var model = IfcStore.Open(EditIfcMainForm.FilePath);  //copied model
             var modelelements = model.Instances.OfType<IfcElement>().ToArray();
-            List<IfcElement> selectedelements = new List<IfcElement>();
-            selectedelements.Add(modelelements[EditIfcMainForm.selectedindex]);
-            
-            imodel = IfcStore.Open(dateiName); //inserted Model
+            List<IIfcElement> selectedelements = EditIfcMainForm.selecteditems;
+
+            var imodel = IfcStore.Open(dateiName); //to be copied to Model
             // Copying the selected items into the other model 
             using (var txn = imodel.BeginTransaction("Insert copy"))
             {
@@ -64,7 +58,6 @@ namespace EditIFC
                 foreach (var obj in selectedelements)
                 {
                     imodel.InsertCopy(obj, map, semanticFilter, true, false);
-                    var placement = obj.ObjectPlacement; //DON'T FORGET THE PLACEMENT
                 }
                 txn.Commit();
             }
