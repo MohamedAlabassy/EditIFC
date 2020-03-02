@@ -35,10 +35,10 @@ using System.Collections;
 
 namespace EditIFC
 {
-    
+
     public partial class EditIfcMainForm : Form
     {
-        
+
         public EditIfcMainForm()
         {
             InitializeComponent();
@@ -80,7 +80,7 @@ namespace EditIFC
         public static String[] array;
         public static String[] array2;
         public static List<Xbim.Ifc4.ProductExtension.IfcBuildingStorey> storeys;
-
+        public static int selectedindex;
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -88,8 +88,7 @@ namespace EditIFC
             dialog.Title = "Open an IFC File";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                
-                String DateiName = dialog.SafeFileName;
+                String DateiName = dialog.FileName;
                 textBox1.Text = dialog.FileName;
             }
 
@@ -104,7 +103,7 @@ namespace EditIFC
                 {
                     listBox1.Items.Add(array[i]);
                 }
-  
+
             }
 
         }
@@ -171,29 +170,32 @@ namespace EditIFC
 
         private void button10_Click(object sender, EventArgs e)
         {
-            
+
         }
         public static string FilePath;
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             FilePath = textBox1.Text;
         }
-        
+
         private void button11_Click(object sender, EventArgs e)
         {
-            if (listBox3.SelectedIndex == -1 || listBox3.SelectedItems.Count>1)
+            if (listBox3.SelectedIndex == -1 || listBox3.SelectedItems.Count > 1)
             {
                 MessageBox.Show("Please select one item first!");
-            } else {
+            }
+            else
+            {
+                selectedindex = listBox1.SelectedIndex;
                 string name = Convert.ToString(listBox3.SelectedItem);
                 ifctype = Array.Find(allEntitiesType, element => element.Name.Split('.').Last().Equals(name));
-                ConstructorInfo cinfo = ifctype.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] {typeof(IModel), typeof(int), typeof(bool) }, null);
-                IInstantiableEntity result = (IInstantiableEntity)cinfo.Invoke(new object[] {IfcStore.Open(textBox1.Text, credentials, -1.0), 1, true});
+                ConstructorInfo cinfo = ifctype.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(IModel), typeof(int), typeof(bool) }, null);
+                IInstantiableEntity result = (IInstantiableEntity)cinfo.Invoke(new object[] { IfcStore.Open(textBox1.Text, credentials, -1.0), 1, true });
                 FormFactory entity = FormFactory.get();
                 entity.GetForm((IIfcObject)result).ShowDialog();
             }
         }
-        
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -206,6 +208,77 @@ namespace EditIFC
         }
 
         private void label27_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form copy = new copyForm();
+            selectedindex = listBox1.SelectedIndex;
+            if (listBox1.SelectedItems.Count==0)
+            {
+                DialogResult result = MessageBox.Show("Select an item from the above list to copy!");
+                if (result == DialogResult.OK)
+                {
+                    Close();
+                } 
+            } else
+            {
+                copy.ShowDialog();
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            String currentlocation;
+            if (listBox1.SelectedItems.Count == 0)
+            {
+                DialogResult result = MessageBox.Show("Select an item from the above list to delete!");
+                if (result == DialogResult.OK)
+                {
+                    Close();
+                }
+            }
+            else
+            {
+                using (var model = IfcStore.Open(FilePath, credentials, -1.0))
+                {
+                    IPersistEntity element2bedeleted = Array.Find(model.Instances.ToList().ToArray(), e1 => e1.GetType().GUID.Equals(instances[listBox1.SelectedIndex].GetType().GUID));
+                    using (var txn = model.BeginTransaction("Delete selected element"))
+                    {
+                        model.Delete(element2bedeleted);
+                        txn.Commit();
+                    }
+
+                    model.SaveAs(FilePath.Split('\\').Last());
+                }
+                currentlocation = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\" + FilePath.Split('\\').Last();
+                System.IO.File.Copy(currentlocation, FilePath, true);
+                if (System.IO.File.Exists(currentlocation))
+                {
+                // Use a try block to catch IOExceptions, to
+                // handle the case of the file already being
+                // opened by another process.
+                try
+                {
+                    System.IO.File.Delete(currentlocation);
+                }
+                catch (System.IO.IOException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return;
+                    }
+                }
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
         {
 
         }

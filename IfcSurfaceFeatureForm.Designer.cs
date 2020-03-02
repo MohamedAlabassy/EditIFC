@@ -55,6 +55,7 @@
             this.button3.TabIndex = 19;
             this.button3.Text = "Add Surface Feature";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // listBox2
             // 
@@ -156,6 +157,7 @@
             this.textBox15.Name = "textBox15";
             this.textBox15.Size = new System.Drawing.Size(44, 20);
             this.textBox15.TabIndex = 66;
+            this.textBox15.TextChanged += new System.EventHandler(this.textBox15_TextChanged);
             // 
             // label19
             // 
@@ -172,6 +174,7 @@
             this.textBox16.Name = "textBox16";
             this.textBox16.Size = new System.Drawing.Size(44, 20);
             this.textBox16.TabIndex = 64;
+            this.textBox16.TextChanged += new System.EventHandler(this.textBox16_TextChanged);
             // 
             // label20
             // 
@@ -188,6 +191,7 @@
             this.textBox17.Name = "textBox17";
             this.textBox17.Size = new System.Drawing.Size(44, 20);
             this.textBox17.TabIndex = 62;
+            this.textBox17.TextChanged += new System.EventHandler(this.textBox17_TextChanged);
             // 
             // label21
             // 

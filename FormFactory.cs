@@ -33,6 +33,10 @@ namespace EditIFC
             {
                 return new IfcSurfaceFeatureForm();
             }
+            else if (obj is IIfcBuildingElementProxy ifcbuildingelementproxy)
+            {
+                return new IfcBuildingElementProxyForm();
+            }
             else return null;
         }
 

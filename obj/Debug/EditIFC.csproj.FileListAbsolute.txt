@@ -2,7 +2,6 @@ D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\bin\Debug\EditI
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\bin\Debug\EditIFC.exe
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\bin\Debug\EditIFC.pdb
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.csprojAssemblyReference.cache
-D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.Form1.resources
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.Properties.Resources.resources
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.csproj.GenerateResource.cache
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.exe
@@ -79,3 +78,7 @@ D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\bin\Debug\Syste
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\bin\Debug\System.Security.Permissions.xml
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\bin\Debug\System.Security.Principal.Windows.xml
 D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.IfcSurfaceFeatureForm.resources
+D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.EditIfcMainForm.resources
+D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.copyForm.resources
+D:\Bauhaus Universität Weimar\4th Semester\HiWi\Task_02\EditIFC\obj\Debug\EditIFC.IfcBuildingElementProxyForm.resources
