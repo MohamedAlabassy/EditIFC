@@ -133,7 +133,6 @@ namespace EditIFC
 
         }
 
-        
       
         private void button3_Click(object sender, EventArgs e)
         {
@@ -186,6 +185,11 @@ namespace EditIFC
         {
             type = IfcBuildingElementProxyTypeEnum.NOTDEFINED;
             buildingProxyElementTypeToolStripMenuItem.Text = "Notdefined";
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

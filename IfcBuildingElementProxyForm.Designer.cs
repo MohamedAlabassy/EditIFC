@@ -80,6 +80,7 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(776, 108);
             this.listBox1.TabIndex = 65;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // button2
             // 
@@ -137,49 +138,49 @@
             // complexToolStripMenuItem
             // 
             this.complexToolStripMenuItem.Name = "complexToolStripMenuItem";
-            this.complexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.complexToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.complexToolStripMenuItem.Text = "Complex";
             this.complexToolStripMenuItem.Click += new System.EventHandler(this.complexToolStripMenuItem_Click);
             // 
             // elementToolStripMenuItem
             // 
             this.elementToolStripMenuItem.Name = "elementToolStripMenuItem";
-            this.elementToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.elementToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.elementToolStripMenuItem.Text = "Element";
             this.elementToolStripMenuItem.Click += new System.EventHandler(this.elementToolStripMenuItem_Click);
             // 
             // partialToolStripMenuItem
             // 
             this.partialToolStripMenuItem.Name = "partialToolStripMenuItem";
-            this.partialToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.partialToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.partialToolStripMenuItem.Text = "Partial";
             this.partialToolStripMenuItem.Click += new System.EventHandler(this.partialToolStripMenuItem_Click);
             // 
             // provisionForVoidToolStripMenuItem
             // 
             this.provisionForVoidToolStripMenuItem.Name = "provisionForVoidToolStripMenuItem";
-            this.provisionForVoidToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.provisionForVoidToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.provisionForVoidToolStripMenuItem.Text = "ProvisionForVoid";
             this.provisionForVoidToolStripMenuItem.Click += new System.EventHandler(this.provisionForVoidToolStripMenuItem_Click);
             // 
             // provisionForSpaceToolStripMenuItem
             // 
             this.provisionForSpaceToolStripMenuItem.Name = "provisionForSpaceToolStripMenuItem";
-            this.provisionForSpaceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.provisionForSpaceToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.provisionForSpaceToolStripMenuItem.Text = "ProvisionForSpace";
             this.provisionForSpaceToolStripMenuItem.Click += new System.EventHandler(this.provisionForSpaceToolStripMenuItem_Click);
             // 
             // userdefinedToolStripMenuItem
             // 
             this.userdefinedToolStripMenuItem.Name = "userdefinedToolStripMenuItem";
-            this.userdefinedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.userdefinedToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.userdefinedToolStripMenuItem.Text = "Userdefined";
             this.userdefinedToolStripMenuItem.Click += new System.EventHandler(this.userdefinedToolStripMenuItem_Click);
             // 
             // notdefinedToolStripMenuItem
             // 
             this.notdefinedToolStripMenuItem.Name = "notdefinedToolStripMenuItem";
-            this.notdefinedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.notdefinedToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.notdefinedToolStripMenuItem.Text = "Notdefined";
             this.notdefinedToolStripMenuItem.Click += new System.EventHandler(this.notdefinedToolStripMenuItem_Click);
             // 

@@ -315,7 +315,7 @@ namespace EditIFC
 
 
 
-            //lets create the IfcElementQuantity
+            // create the IfcElementQuantity
             var ifcPropertySet = model.Instances.New<IfcPropertySet>(ps =>
             {
                 ps.Name = "Test:IfcPropertySet";
@@ -441,7 +441,6 @@ namespace EditIFC
         
         private void button3_Click(object sender, EventArgs e)
         {
-            EditIfcMainForm frm1 = new EditIfcMainForm();
             String currentlocation;
             SaveFileDialog dialog = new SaveFileDialog();
 

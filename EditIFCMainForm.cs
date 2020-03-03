@@ -134,9 +134,6 @@ namespace EditIFC
             updateSelectedItemsAndIndeces(DateiName);
         }
 
-        public static Xbim.Ifc4.ProductExtension.IfcBuildingStorey StoreyLevel;
-        //public IfcStore model = IfcStore.Open(FilePath, credentials, -1.0);
-
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
@@ -204,7 +201,7 @@ namespace EditIFC
                 ConstructorInfo cinfo = ifctype.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(IModel), typeof(int), typeof(bool) }, null);
                 IInstantiableEntity result = (IInstantiableEntity)cinfo.Invoke(new object[] { IfcStore.Open(textBox1.Text, credentials, -1.0), 1, true });
                 FormFactory entity = FormFactory.get();
-                entity.GetForm((IIfcObject)result).ShowDialog();
+                entity.GetForm((IfcObject)result).ShowDialog();
             }
         }
 
