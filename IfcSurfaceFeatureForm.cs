@@ -16,6 +16,7 @@ using Xbim.Ifc4.PresentationAppearanceResource;
 using Xbim.Ifc4.RepresentationResource;
 using Xbim.Ifc4.StructuralElementsDomain;
 using Xbim.Common.Collections;
+using Xbim.Common.Geometry;
 
 namespace EditIFC
 {
@@ -25,7 +26,7 @@ namespace EditIFC
         {
             InitializeComponent();
             // Showing the IIfcElements of the original model file
-            updateListOfElements(dateiname);
+            updateListOfElements(EditIfcMainForm.FilePath);
 
         }
 
@@ -225,54 +226,26 @@ namespace EditIFC
             surfacefeature.GlobalId = new Xbim.Ifc4.UtilityResource.IfcGloballyUniqueId(Guid.NewGuid().ToString());
 
             //Positioning
-            //Specifying the relative position of the surface feature to the IfcElement
-            //IIfcObjectPlacement objplacement = ((IIfcElement)surffeatelement).ObjectPlacement;
-            /*IIfcLocalPlacement lp = model.Instances.New<IfcLocalPlacement>();
             var origin = model.Instances.New<IfcCartesianPoint>();
-            origin.SetXYZ(Convert.ToDouble(textBox17.Text), Convert.ToDouble(textBox15.Text), Convert.ToDouble(textBox16.Text));
-            // Setting the axis placement3D attributes
-            var ax3D = model.Instances.New<IfcAxis2Placement3D>();
-            ax3D.Location = origin;
-            ax3D.RefDirection = model.Instances.New<IfcDirection>();
-            ax3D.RefDirection.SetXYZ(0, 1, 0);
-            ax3D.Axis = model.Instances.New<IfcDirection>();
-            ax3D.Axis.SetXYZ(0, 0, 1);
-            lp.RelativePlacement = ax3D;*/
-
-            //Final positioning of the Surface Feature
-
-            /*var origin = model.Instances.New<IfcCartesianPoint>();
-            var lp = model.Instances.New<IfcLocalPlacement>();
-            lp = (IfcLocalPlacement)((IPersist)(surffeatelement.ObjectPlacement));
-            IfcAxis2Placement ax2pl = lp.RelativePlacement;
-            origin.SetXYZ(ax2pl.P[0].X + Convert.ToDouble(textBox17.Text), ax2pl.P[1].Y + Convert.ToDouble(textBox15.Text), ax2pl.P[2].Z + Convert.ToDouble(textBox16.Text));
-            var ax3D = model.Instances.New<IfcAxis2Placement3D>();
-            ax3D.Location = origin;
-            ax3D.RefDirection = model.Instances.New<IfcDirection>();
-            ax3D.RefDirection.SetXYZ(0, 1, 0);
-            ax3D.Axis = model.Instances.New<IfcDirection>();
-            ax3D.Axis.SetXYZ(1, 0, 0);
-            lp.RelativePlacement = ax3D;*/
-
+            origin.SetXYZ(0.0, 0.0, 0.0);
             var neworigin = model.Instances.New<IfcCartesianPoint>();
+            //var surffeatelementrelorigin = ((IIfcPlacement)((IIfcLocalPlacement)(surffeatelement.ObjectPlacement)).RelativePlacement).Location;
             neworigin.SetXYZ(Convert.ToDouble(textBox17.Text), Convert.ToDouble(textBox15.Text), Convert.ToDouble(textBox16.Text));
             var cartesiantransoperator2d = model.Instances.New<IfcCartesianTransformationOperator2D>();
             IfcDirection axis1 = model.Instances.New<IfcDirection>();
             IfcDirection axis2 = model.Instances.New<IfcDirection>();
-            axis1.SetXYZ(0.0, 0.0, 1.0);
-            axis2.SetXYZ(1.0, 0.0, 0.0);
+            axis1.SetXYZ(0.0, 1.0, 0.0);
+            axis2.SetXYZ(0.0, 0.0, 1.0);
             cartesiantransoperator2d.Axis1 = axis1;
             cartesiantransoperator2d.Axis2 = axis2;
-            var localorigin = model.Instances.New<IfcCartesianPoint>();
-            localorigin.SetXYZ(0.0, 0.0, 0.0);
-            cartesiantransoperator2d.LocalOrigin = localorigin;
+            cartesiantransoperator2d.LocalOrigin = origin;
             cartesiantransoperator2d.Scale = new IfcReal(1.0);
 
             IfcAxis2Placement3D newplacement = model.Instances.New<IfcAxis2Placement3D>(newpl =>
             {
                 newpl.Axis = axis1;
                 newpl.RefDirection = axis2;
-                newpl.Location = neworigin;
+                newpl.Location = neworigin; /////////////////////////////
             });
 
             var lp = model.Instances.New<IfcLocalPlacement>(relpos=>
@@ -281,33 +254,19 @@ namespace EditIFC
                 relpos.RelativePlacement = newplacement;
             });
 
-            surfacefeature.ObjectPlacement = lp;
-
-
             //Representation
-            /* var cartesiantransoperator2d = model.Instances.New<IfcCartesianTransformationOperator2D>();
-            IfcDirection axis1 = model.Instances.New<IfcDirection>(); ;
-            IfcDirection axis2 = model.Instances.New<IfcDirection>();
-            axis1.SetXYZ(0.0, 1.0, 0.0);
-            axis2.SetXYZ(1.0, 0.0, 0.0);
-            cartesiantransoperator2d.Axis1 = axis1;
-            cartesiantransoperator2d.Axis2 = axis2;
-            cartesiantransoperator2d.LocalOrigin = neworigin;
-            cartesiantransoperator2d.Scale = new IfcReal(1.0);*/
-
             var x = new List<IfcLengthMeasure>();
+            //Change the values in the list to change the texture size
             var pointlist = model.Instances.New<IfcCartesianPointList3D>(cpl =>
             {
-                //IfcCartesianPointList3D.CoordList.Add(IfcCartesianPoint object)
-                cpl.CoordList.Clear();
-                cpl.CoordList.GetAt(0).AddRange(new List<IfcLengthMeasure>() { 0.0, 0.0, 0.0 });
-                cpl.CoordList.GetAt(1).AddRange(new List<IfcLengthMeasure>() { 1.0, 0.0, 0.0 });
-                cpl.CoordList.GetAt(2).AddRange(new List<IfcLengthMeasure>() { 1.0, 1.0, 0.0 });
-                cpl.CoordList.GetAt(3).AddRange(new List<IfcLengthMeasure>() { 0.0, 1.0, 0.0 });
-                cpl.CoordList.GetAt(4).AddRange(new List<IfcLengthMeasure>() { 0.0, 0.0, 2.0 });
-                cpl.CoordList.GetAt(5).AddRange(new List<IfcLengthMeasure>() { 1.0, 0.0, 2.0 });
-                cpl.CoordList.GetAt(6).AddRange(new List<IfcLengthMeasure>() { 1.0, 1.0, 2.0 });
-                cpl.CoordList.GetAt(7).AddRange(new List<IfcLengthMeasure>() { 0.0, 1.0, 2.0 });
+                cpl.CoordList.GetAt(0).AddRange(new IfcLengthMeasure[] { 0.0, 0.0, 0.0 });
+                cpl.CoordList.GetAt(1).AddRange(new IfcLengthMeasure[] { 1.0, 0.0, 0.0 });
+                cpl.CoordList.GetAt(2).AddRange(new IfcLengthMeasure[] { 1.0, 1.0, 0.0 });
+                cpl.CoordList.GetAt(3).AddRange(new IfcLengthMeasure[] { 0.0, 1.0, 0.0 });
+                //cpl.CoordList.GetAt(4).AddRange(new IfcLengthMeasure[] { 0.0, 0.0, 2.0 });
+                //cpl.CoordList.GetAt(5).AddRange(new IfcLengthMeasure[] { 1.0, 0.0, 2.0 });
+                //cpl.CoordList.GetAt(6).AddRange(new IfcLengthMeasure[] { 1.0, 1.0, 2.0 });
+                //cpl.CoordList.GetAt(7).AddRange(new IfcLengthMeasure[] { 0.0, 1.0, 2.0 });
             });
 
             var indextritexmap = model.Instances.New<IfcIndexedTriangleTextureMap>(itm =>
@@ -369,7 +328,7 @@ namespace EditIFC
 
             var surfstyle = model.Instances.New<IfcSurfaceStyle>();
             surfstyle.Side = IfcSurfaceSide.POSITIVE;
-         
+
             IfcSurfaceStyleWithTextures surfstylewithtexture = model.Instances.New<IfcSurfaceStyleWithTextures>();
             surfstylewithtexture.Textures.Add((IfcSurfaceTexture)bloborimagetex);
             //Create a Definition shape to hold the the surface feature
@@ -386,7 +345,7 @@ namespace EditIFC
             product.Representations.Add(shape);
             surfacefeature.Representation = product;
             surfacefeature.ObjectPlacement = lp;
-            
+
             var relaggregate = new Create(model).RelAggregates(rel =>
             {
                 rel.RelatedObjects.Add(surfacefeature);
