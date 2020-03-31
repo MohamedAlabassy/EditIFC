@@ -55,6 +55,8 @@ namespace EditIFC
             {
                 listBox3.Items.Add(e);
             }
+
+            
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -78,6 +80,9 @@ namespace EditIFC
                 {
                     listBox1.Items.Add(array[i]);
                 }
+                storeys.Clear();
+                storeys = model.Instances.OfType<IfcBuildingStorey>().ToList();
+               
             }
         }
 
@@ -85,6 +90,7 @@ namespace EditIFC
         {
             selectedindices.Clear();
             selecteditems.Clear();
+            storeys.Clear();
             selectedindices = listBox1.SelectedIndices.Cast<int>().ToList();
             using (var model = IfcStore.Open(filename, credentials, -1.0))
             {
@@ -93,6 +99,7 @@ namespace EditIFC
                 {
                     selecteditems.Add(Array.Find(instances, e => e.GetType().GUID.Equals(instances[i].GetType().GUID)));
                 }
+                storeys = model.Instances.OfType<IfcBuildingStorey>().ToList();
             }
         }
 
@@ -111,7 +118,7 @@ namespace EditIFC
         public static String[] array;
         public static String[] array2;
         string DateiName;
-        public static List<Xbim.Ifc4.ProductExtension.IfcBuildingStorey> storeys;
+        public static List <IfcBuildingStorey> storeys = new List <IfcBuildingStorey>();
         public static List<IIfcElement> selecteditems = new List<IIfcElement>();
         public static List<int> selectedindices = new List<int>();
 

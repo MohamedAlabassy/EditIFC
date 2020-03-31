@@ -37,6 +37,14 @@ namespace EditIFC
             {
                 return new IfcBuildingElementProxyForm();
             }
+            else if (obj is IIfcBlobTexture ifcblobtexture)
+            {
+                return new IfcSurfaceFeatureForm();
+            }
+            else if (obj is IIfcImageTexture ifcimagetexture)
+            {
+                return new IfcSurfaceFeatureForm();
+            }
             else return null;
         }
 

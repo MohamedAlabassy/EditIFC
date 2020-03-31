@@ -241,11 +241,16 @@ namespace EditIFC
             cartesiantransoperator2d.LocalOrigin = origin;
             cartesiantransoperator2d.Scale = new IfcReal(1.0);
 
+            bloborimagetex.RepeatS = true;
+            bloborimagetex.RepeatT = true;
+            bloborimagetex.Mode = "TEXTURE";
+            bloborimagetex.TextureTransform = cartesiantransoperator2d;
+
             IfcAxis2Placement3D newplacement = model.Instances.New<IfcAxis2Placement3D>(newpl =>
             {
                 newpl.Axis = axis1;
                 newpl.RefDirection = axis2;
-                newpl.Location = neworigin; /////////////////////////////
+                newpl.Location = neworigin; /////////////////////set it back to neworigin
             });
 
             var lp = model.Instances.New<IfcLocalPlacement>(relpos=>
@@ -255,74 +260,70 @@ namespace EditIFC
             });
 
             //Representation
-            var x = new List<IfcLengthMeasure>();
             //Change the values in the list to change the texture size
             var pointlist = model.Instances.New<IfcCartesianPointList3D>(cpl =>
             {
                 cpl.CoordList.GetAt(0).AddRange(new IfcLengthMeasure[] { 0.0, 0.0, 0.0 });
-                cpl.CoordList.GetAt(1).AddRange(new IfcLengthMeasure[] { 1.0, 0.0, 0.0 });
-                cpl.CoordList.GetAt(2).AddRange(new IfcLengthMeasure[] { 1.0, 1.0, 0.0 });
-                cpl.CoordList.GetAt(3).AddRange(new IfcLengthMeasure[] { 0.0, 1.0, 0.0 });
+                cpl.CoordList.GetAt(1).AddRange(new IfcLengthMeasure[] { Convert.ToDouble(textBox3.Text), 0.0, 0.0 });  //Height
+                cpl.CoordList.GetAt(2).AddRange(new IfcLengthMeasure[] { 0.0, Convert.ToDouble(textBox2.Text), 0.0 });  //Width
+                cpl.CoordList.GetAt(3).AddRange(new IfcLengthMeasure[] { Convert.ToDouble(textBox3.Text), Convert.ToDouble(textBox2.Text), 0.0 });
                 //cpl.CoordList.GetAt(4).AddRange(new IfcLengthMeasure[] { 0.0, 0.0, 2.0 });
                 //cpl.CoordList.GetAt(5).AddRange(new IfcLengthMeasure[] { 1.0, 0.0, 2.0 });
                 //cpl.CoordList.GetAt(6).AddRange(new IfcLengthMeasure[] { 1.0, 1.0, 2.0 });
                 //cpl.CoordList.GetAt(7).AddRange(new IfcLengthMeasure[] { 0.0, 1.0, 2.0 });
             });
 
+            var vl = model.Instances.New<IfcTextureVertexList>(itm =>
+            {
+                itm.TexCoordsList.GetAt(0).AddRange(new IfcParameterValue[] { 0.0, 0.0 });
+                itm.TexCoordsList.GetAt(1).AddRange(new IfcParameterValue[] { 0.0, 1.0 });
+                itm.TexCoordsList.GetAt(2).AddRange(new IfcParameterValue[] { 1.0, 0.0 });
+                itm.TexCoordsList.GetAt(3).AddRange(new IfcParameterValue[] { 1.0, 1.0 });
+                //itm.TexCoordsList.GetAt(4).AddRange(new IfcParameterValue[] { 0.0, -1.5 });
+                //itm.TexCoordsList.GetAt(5).AddRange(new IfcParameterValue[] { 1.0, -0.5 });
+                //itm.TexCoordsList.GetAt(6).AddRange(new IfcParameterValue[] { 0.0, 1.5 });
+                //itm.TexCoordsList.GetAt(7).AddRange(new IfcParameterValue[] { 1.0, 1.5 });
+
+
+            });
+
             var indextritexmap = model.Instances.New<IfcIndexedTriangleTextureMap>(itm =>
             {
                 itm.TexCoordIndex.GetAt(0).AddRange(new IfcPositiveInteger[] { 1, 4, 3 });
-                itm.TexCoordIndex.GetAt(1).AddRange(new IfcPositiveInteger[] { 1, 2, 4 });
-                itm.TexCoordIndex.GetAt(2).AddRange(new IfcPositiveInteger[] { 3, 1, 4 });
-                itm.TexCoordIndex.GetAt(3).AddRange(new IfcPositiveInteger[] { 4, 1, 2 });
-                itm.TexCoordIndex.GetAt(4).AddRange(new IfcPositiveInteger[] { 8, 7, 6 });
-                itm.TexCoordIndex.GetAt(5).AddRange(new IfcPositiveInteger[] { 6, 7, 5 });
-                itm.TexCoordIndex.GetAt(6).AddRange(new IfcPositiveInteger[] { 4, 3, 2 });
-                itm.TexCoordIndex.GetAt(7).AddRange(new IfcPositiveInteger[] { 2, 3, 1 });
-                itm.TexCoordIndex.GetAt(8).AddRange(new IfcPositiveInteger[] { 5, 8, 7 });
-                itm.TexCoordIndex.GetAt(9).AddRange(new IfcPositiveInteger[] { 8, 5, 6 });
-                itm.TexCoordIndex.GetAt(10).AddRange(new IfcPositiveInteger[] { 2, 4, 3 });
-                itm.TexCoordIndex.GetAt(11).AddRange(new IfcPositiveInteger[] { 3, 1, 2 });
+                itm.TexCoordIndex.GetAt(1).AddRange(new IfcPositiveInteger[] { 2, 3, 1 }); 
+                //itm.TexCoordIndex.GetAt(2).AddRange(new IfcPositiveInteger[] { 3, 1, 4 });
+                //itm.TexCoordIndex.GetAt(3).AddRange(new IfcPositiveInteger[] { 4, 1, 2 });
+                //itm.TexCoordIndex.GetAt(4).AddRange(new IfcPositiveInteger[] { 8, 7, 6 });
+                //itm.TexCoordIndex.GetAt(5).AddRange(new IfcPositiveInteger[] { 6, 7, 5 });
+                //itm.TexCoordIndex.GetAt(6).AddRange(new IfcPositiveInteger[] { 4, 3, 2 });
+                //itm.TexCoordIndex.GetAt(7).AddRange(new IfcPositiveInteger[] { 1, 2, 4 });
+                //itm.TexCoordIndex.GetAt(8).AddRange(new IfcPositiveInteger[] { 5, 8, 7 });
+                //itm.TexCoordIndex.GetAt(9).AddRange(new IfcPositiveInteger[] { 8, 5, 6 });
+                //itm.TexCoordIndex.GetAt(10).AddRange(new IfcPositiveInteger[] { 2, 4, 3 });
+                //itm.TexCoordIndex.GetAt(11).AddRange(new IfcPositiveInteger[] { 3, 1, 2 });
             });
 
-            bloborimagetex.RepeatS = true;
-            bloborimagetex.RepeatT = true;
-            bloborimagetex.Mode = "TEXTURE";
-            bloborimagetex.TextureTransform = cartesiantransoperator2d;
-
-            var trifaceset = model.Instances.New<IfcTriangulatedFaceSet>(tfs=>
+            var trifaceset = model.Instances.New<IfcTriangulatedFaceSet>(tfs =>
             {
-                
-                tfs.CoordIndex.GetAt(0).AddRange(new IfcPositiveInteger[] { 1, 6, 5 });
-                tfs.CoordIndex.GetAt(1).AddRange(new IfcPositiveInteger[] { 1, 2, 6 });
-                tfs.CoordIndex.GetAt(2).AddRange(new IfcPositiveInteger[] { 6, 2, 7 });
-                tfs.CoordIndex.GetAt(3).AddRange(new IfcPositiveInteger[] { 7, 2, 3 });
-                tfs.CoordIndex.GetAt(4).AddRange(new IfcPositiveInteger[] { 7, 8, 6 });
-                tfs.CoordIndex.GetAt(5).AddRange(new IfcPositiveInteger[] { 6, 8, 5 });
-                tfs.CoordIndex.GetAt(6).AddRange(new IfcPositiveInteger[] { 5, 8, 1 });
-                tfs.CoordIndex.GetAt(7).AddRange(new IfcPositiveInteger[] { 1, 8, 4 });
-                tfs.CoordIndex.GetAt(8).AddRange(new IfcPositiveInteger[] { 4, 2, 1 });
-                tfs.CoordIndex.GetAt(9).AddRange(new IfcPositiveInteger[] { 2, 4, 3 });
+                tfs.CoordIndex.GetAt(0).AddRange(new IfcPositiveInteger[] { 4, 2, 1 });
+                tfs.CoordIndex.GetAt(1).AddRange(new IfcPositiveInteger[] { 2, 4, 3 });
+                tfs.CoordIndex.GetAt(2).AddRange(new IfcPositiveInteger[] { 1, 6, 5 });
+                tfs.CoordIndex.GetAt(3).AddRange(new IfcPositiveInteger[] { 1, 2, 6 });
+                tfs.CoordIndex.GetAt(4).AddRange(new IfcPositiveInteger[] { 6, 2, 7 });
+                tfs.CoordIndex.GetAt(5).AddRange(new IfcPositiveInteger[] { 7, 2, 3 });
+                tfs.CoordIndex.GetAt(6).AddRange(new IfcPositiveInteger[] { 7, 8, 6 });
+                tfs.CoordIndex.GetAt(7).AddRange(new IfcPositiveInteger[] { 6, 8, 5 });
+                tfs.CoordIndex.GetAt(8).AddRange(new IfcPositiveInteger[] { 5, 8, 1 });
+                tfs.CoordIndex.GetAt(9).AddRange(new IfcPositiveInteger[] { 1, 8, 4 });
                 tfs.CoordIndex.GetAt(10).AddRange(new IfcPositiveInteger[] { 4, 8, 7 });
                 tfs.CoordIndex.GetAt(11).AddRange(new IfcPositiveInteger[] { 7, 3, 4 });
 
             });
             trifaceset.Closed = true;
             trifaceset.Coordinates = pointlist;
-            
-            
-            var vl = model.Instances.New<IfcTextureVertexList>(itm =>
-            {
-                itm.TexCoordsList.GetAt(0).AddRange(new IfcParameterValue[] { 0.0, -1.5 });
-                itm.TexCoordsList.GetAt(1).AddRange(new IfcParameterValue[] { 1.0, -0.5 });
-                itm.TexCoordsList.GetAt(2).AddRange(new IfcParameterValue[] { 0.0, 1.5 });
-                itm.TexCoordsList.GetAt(3).AddRange(new IfcParameterValue[] { 1.0, 1.5 });
-                itm.TexCoordsList.GetAt(4).AddRange(new IfcParameterValue[] { 0.0, 0.0 });
-                itm.TexCoordsList.GetAt(5).AddRange(new IfcParameterValue[] { 0.0, 1.0 });
-                itm.TexCoordsList.GetAt(6).AddRange(new IfcParameterValue[] { 1.0, 0.0 });
-                itm.TexCoordsList.GetAt(7).AddRange(new IfcParameterValue[] { 1.0, 1.0 });
 
-            });
+            
+
             indextritexmap.TexCoords = vl;
             var styleditem = model.Instances.New<IfcStyledItem>();
 
@@ -351,6 +352,11 @@ namespace EditIFC
                 rel.RelatedObjects.Add(surfacefeature);
                 rel.RelatingObject = surffeatelement;
             });
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
