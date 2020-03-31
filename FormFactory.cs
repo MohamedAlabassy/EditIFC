@@ -10,7 +10,7 @@ using Xbim.Ifc4.Kernel;
 namespace EditIFC
 {
     /// <summary>
-    /// Generate the forms for editing ifc 4 entities
+    /// Generate the forms for editing IFC 4 entities
     /// </summary>
     public class FormFactory
     {

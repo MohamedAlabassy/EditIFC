@@ -250,7 +250,7 @@ namespace EditIFC
             {
                 newpl.Axis = axis1;
                 newpl.RefDirection = axis2;
-                newpl.Location = neworigin; /////////////////////set it back to neworigin
+                newpl.Location = neworigin;
             });
 
             var lp = model.Instances.New<IfcLocalPlacement>(relpos=>

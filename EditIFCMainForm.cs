@@ -301,6 +301,7 @@ namespace EditIFC
         private void button2_Click(object sender, EventArgs e)
         {
             Form paste = new PasteForm();
+            updateSelectedItemsAndIndeces(DateiName);
             paste.ShowDialog();
             updateListOfElements(DateiName, credentials);
             updateSelectedItemsAndIndeces(DateiName);

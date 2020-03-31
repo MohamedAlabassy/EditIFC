@@ -42,19 +42,22 @@ namespace EditIFC
                 //var secondmodel = model.Instances.OfType<IInstantiableEntity>();
                 var model = IfcStore.Open(DateiName); //to be copied to Model
                 var modelelements = model.Instances.OfType<IfcElement>().ToArray();
-                List<IIfcElement> selectedelements = selecteditems;
-
                 var imodel = IfcStore.Open(EditIfcMainForm.FilePath);  //copied model
-                // Copying the selected items into the other model 
-                using (var txn = imodel.BeginTransaction("Insert copy"))
+                foreach (var item in selecteditems)
                 {
-                    //single map should be used for all insertions between two models
-                    var map = new XbimInstanceHandleMap(model, imodel);
-                    foreach (var obj in selectedelements)
+                    List<IIfcElement> selectedelements = new List<IIfcElement>();
+                    selectedelements.Add(item);
+                    // Pasting the selected items into the other model 
+                    using (var txn = imodel.BeginTransaction("Insert copy"))
                     {
-                        imodel.InsertCopy(obj, map, semanticFilter, true, false);
+                        //single map should be used for all insertions between two models
+                        var map = new XbimInstanceHandleMap(model, imodel);
+                        foreach (var obj in selectedelements)
+                        {
+                            imodel.InsertCopy(obj, map, semanticFilter, true, false);
+                        }
+                        txn.Commit();
                     }
-                    txn.Commit();
                 }
                 // saving the new merged file
                 string filename = "merged_model.ifc";
@@ -127,7 +130,7 @@ namespace EditIFC
             using (var model = IfcStore.Open(filename, EditIfcMainForm.credentials, -1.0))
             {
                 instances = model.Instances.OfType<IIfcElement>().ToArray();
-                foreach (int i in selectedindices)
+                foreach (var i in selectedindices)
                 {
                     selecteditems.Add(Array.Find(instances, e => e.GetType().GUID.Equals(instances[i].GetType().GUID)));
                 }

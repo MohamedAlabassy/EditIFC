@@ -24,7 +24,15 @@ namespace EditIFC
         public static String dateiName;
         private void button1_Click(object sender, EventArgs e)
         {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "IFC|*.ifc|Ifc ZIP|*.ifczip|XML|*.xml";
+            dialog.Title = "Open an IFC File";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
 
+                dateiName = dialog.FileName;
+                textBox1.Text = dialog.FileName;
+            }
         }
 
         private PropertyTranformDelegate semanticFilter = (property, parentObject) =>
@@ -44,22 +52,25 @@ namespace EditIFC
 
         private void button3_Click(object sender, EventArgs e)
         {
-            //var secondmodel = model.Instances.OfType<IInstantiableEntity>();
             var model = IfcStore.Open(EditIfcMainForm.FilePath);  //copied model
-            var modelelements = model.Instances.OfType<IfcElement>().ToArray();
-            List<IIfcElement> selectedelements = EditIfcMainForm.selecteditems;
+            //var modelelements = model.Instances.OfType<IfcElement>().ToArray();
 
             var imodel = IfcStore.Open(dateiName); //to be copied to Model
             // Copying the selected items into the other model 
-            using (var txn = imodel.BeginTransaction("Insert copy"))
+            foreach(var item in EditIfcMainForm.selecteditems)
             {
-                //single map should be used for all insertions between two models
-                var map = new XbimInstanceHandleMap(model, imodel);
-                foreach (var obj in selectedelements)
+                List<IIfcElement> selectedelements = new List<IIfcElement>();
+                selectedelements.Add(item);
+                using (var txn = imodel.BeginTransaction("Insert copy"))
                 {
-                    imodel.InsertCopy(obj, map, semanticFilter, true, false);
+                    //single map should be used for all insertions between two models
+                    var map = new XbimInstanceHandleMap(model, imodel);
+                    foreach (var obj in selectedelements)
+                    {
+                        imodel.InsertCopy(obj, map, semanticFilter, true, false);
+                    }
+                    txn.Commit();
                 }
-                txn.Commit();
             }
             // saving the new merged file
             string filename = "merged_model.ifc";
@@ -74,7 +85,7 @@ namespace EditIFC
             dialog.RestoreDirectory = true;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                mergedmodel.SaveAs(dialog.FileName.Split('\\').Last());
+                mergedmodel.SaveAs(dateiName.Split('\\').Last());
             }
 
             currentlocation = System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\" + dialog.FileName.Split('\\').Last();
